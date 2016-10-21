@@ -92,7 +92,7 @@ public class Produit implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    //ici commentaire de test
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
