@@ -1,5 +1,8 @@
 package servlet;
 
+import entities.Produit;
+import entities.Utilisateur;
+import gestionnaire.ProduitManager;
 import gestionnaire.gestionnaireUtilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,11 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "UtilisateurServlet", urlPatterns = {"/UtilisateurServlet"})
+@WebServlet(name = "UtilisateurServlet", urlPatterns = {"/"})
 public class UtilisateurServlet extends HttpServlet {
 
     @EJB
     private gestionnaireUtilisateur gu;
+    
+    @EJB
+    private ProduitManager pu;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,13 +42,20 @@ public class UtilisateurServlet extends HttpServlet {
             if (action.equals("connexion")) {
                 boolean check = gu.Authentification(pseudo, password);
                 if (check == true) {
-                    request.setAttribute("pseudo", pseudo.toUpperCase());
+                    Utilisateur u = gu.findByPseudo(pseudo);
+                    request.setAttribute("pseudo", pseudo);
+                    request.setAttribute("prenom", capitalize(u.getPrenom()));
+                    request.setAttribute("nom", u.getNom().toUpperCase());
+                    Produit pdj = pu.getProduitDuJour();
+                    request.setAttribute("pdj_n", pdj.getNom());
+                    request.setAttribute("pdj_p", pdj.getPrix());
                     forwardTo = "accueil.jsp";
                 } else {
                     forwardTo = "index.html";
                 }
             }
         } else {
+            pu.creerProduits();
             gu.CreerUserTest();
             forwardTo = "index.jsp";
         }
@@ -51,6 +64,19 @@ public class UtilisateurServlet extends HttpServlet {
         dp.forward(request, response);
 
     }
+    
+    private static String capitalize(String s ) {
+        String res = "";
+        char[] org = s.toCharArray();
+        for(int i = 0; i < org.length; i++) {
+            if(i==0) {
+                res += Character.toUpperCase(org[0]);
+            } else {
+                res += org[i];
+            }
+        }
+        return res;
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

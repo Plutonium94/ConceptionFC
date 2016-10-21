@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 
 @Stateless
@@ -17,18 +18,18 @@ public class gestionnaireUtilisateur {
         em.persist(object);
     }
     
-    public Utilisateur creeUtilisateur(String pseudo, String password, String profil) {
-        Utilisateur u = new Utilisateur(pseudo, password, profil);
+    public Utilisateur creeUtilisateur(String pseudo, String password, String profil, String nom, String prenom) {
+        Utilisateur u = new Utilisateur(pseudo, password, profil, nom, prenom);
         em.persist(u);
         return u;
     }
     
     public void CreerUserTest(){      
        
-       creeUtilisateur("domitile", "domitile", "admin");
-       creeUtilisateur("daniel", "daniel", "client");
-       creeUtilisateur("david", "david", "client");
-       creeUtilisateur("walid", "walid", "client");
+       creeUtilisateur("domitile", "domitile", "admin","cheroutre","domitille");
+       creeUtilisateur("daniel", "daniel", "client","arasu","daniel");
+       creeUtilisateur("david", "david", "client","micallef","david");
+       creeUtilisateur("walid", "walid", "client","rhazadi","walid");
     }
     
     public boolean Authentification(String pseudo, String password) {
@@ -42,6 +43,14 @@ public class gestionnaireUtilisateur {
         } else {
             return false;
         }
+    }
+    
+    public Utilisateur findByPseudo(String pseudo) {
+        List<Utilisateur> u = (List<Utilisateur>)em.createQuery("select u from Utilisateur u where u.pseudo = :pseudo").setParameter("pseudo", pseudo).setMaxResults(1).getResultList();
+        if(u.size() > 0 ) {
+            return u.get(0);
+        }
+        return null;
     }
 
 }

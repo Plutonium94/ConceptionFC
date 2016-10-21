@@ -14,16 +14,20 @@ public class Utilisateur implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String pseudo;
+    private String nom;
+    private String prenom;
     private String password;
     private String profil;
 
     
     public Utilisateur(){}
     
-    public Utilisateur(String pseudo, String password, String profil) {
+    public Utilisateur(String pseudo, String password, String profil, String nom, String prenom) {
         this.pseudo = pseudo;
         this.password = password;
         this.profil = profil;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     
@@ -58,6 +62,24 @@ public class Utilisateur implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+    
+    
 
     @Override
     public int hashCode() {

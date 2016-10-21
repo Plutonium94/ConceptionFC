@@ -25,7 +25,7 @@
             <!-- Portfolio Item Heading -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Bonjour ${requestScope['pseudo']}</h1>
+                    <h1 class="page-header">Bonjour ${requestScope['nom']} ${requestScope['prenom']}</h1>
                 </div>
             </div>
             <!-- /.row -->
@@ -39,8 +39,8 @@
 
                 <div class="col-md-4">
                     <h3>Produit du jour</h3>
-                    <p>Le " Pantalon zouk "</p>
-                    <label>Prix HT : </label><p> 50 €</p>
+                    <p>Le " ${requestScope['pdj_n']} "</p>
+                    <label>Prix HT : </label><p> ${requestScope['pdj_p']} €</p>
                     <br>
                     <form>
                         <div class="form-group">
