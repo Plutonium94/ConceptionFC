@@ -105,7 +105,7 @@ public class Produit implements Serializable {
         }
         return true;
     }
-
+    //voici un nouveau commentaire
     @Override
     public String toString() {
         return "entities.Produit[ id=" + id + ", nom =" + nom +"  ]";
